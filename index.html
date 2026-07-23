@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VisionGuard AI Mobile 📱👁️ | Mobile Surveillance & Safety</title>
+  <meta name="description" content="VisionGuard AI Mobile - Real-time computer vision, driver safety, object tracking, and mobile security surveillance." />
+  <meta name="theme-color" content="#0d0d15" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Mobile App Header / Status Bar -->
+  <header class="app-header">
+    <div class="logo">
+      <span class="pulse-icon">👁️</span> VisionGuard <span>AI</span>
+    </div>
+    <div class="header-status">
+      <span id="fps-counter" class="fps-badge">60 FPS</span>
+      <span id="cam-status" class="status-badge active">LIVE</span>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <!-- Camera Viewport Container -->
+    <div class="viewport-wrapper">
+      <video id="webcam" autoplay playsinline muted></video>
+      <canvas id="ai-canvas"></canvas>
+      
+      <!-- HUD Overlays -->
+      <div class="hud-top">
+        <div class="hud-item">
+          <span class="hud-label">MODE</span>
+          <span id="hud-mode-name" class="hud-value">🚗 DRIVER SAFETY</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">AI ENGINE</span>
+          <span class="hud-value glow-green">YOLOv8 Nano</span>
+        </div>
+      </div>
+
+      <!-- Drowsiness / Hazard Alarm Warning Banner -->
+      <div id="alarm-banner" class="alarm-banner hidden">
+        <div class="alarm-content">
+          <span class="alarm-icon">🚨</span>
+          <div class="alarm-text">
+            <h3 id="alarm-title">DROWSINESS DETECTED!</h3>
+            <p id="alarm-desc">Eye closure > 2.5s! Wake up & pull over safely.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Quick HUD Stats -->
+      <div class="hud-bottom">
+        <div class="stat-pill">
+          <span class="stat-icon">🚗</span>
+          <span id="stat-count">0 Detections</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">⚡</span>
+          <span id="stat-latency">14 ms</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">🛡️</span>
+          <span id="stat-status">Secure</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <section class="mode-selector">
+      <button class="mode-btn active" data-mode="driver">
+        <span class="mode-icon">🚗</span>
+        <span class="mode-title">Driver Safety</span>
+        <span class="mode-desc">Fatigue & Eye Tracking</span>
+      </button>
+      <button class="mode-btn" data-mode="traffic">
+        <span class="mode-icon">🚦</span>
+        <span class="mode-title">Traffic Monitor</span>
+        <span class="mode-desc">Vehicles & Pedestrians</span>
+      </button>
+      <button class="mode-btn" data-mode="perimeter">
+        <span class="mode-icon">🛡️</span>
+        <span class="mode-title">Perimeter Guard</span>
+        <span class="mode-desc">Intruder & Motion</span>
+      </button>
+    </section>
+
+    <!-- Controls & Camera Toggle -->
+    <section class="controls-panel">
+      <button id="toggle-cam-btn" class="btn btn-primary">
+        🎥 Toggle Camera / Demo
+      </button>
+      <button id="simulate-hazard-btn" class="btn btn-warning">
+        🚨 Test Alarm Signal
+      </button>
+      <button id="snapshot-btn" class="btn btn-secondary">
+        📸 Snapshot
+      </button>
+    </section>
+
+    <!-- Real-Time Security Incident Log -->
+    <section class="log-section">
+      <div class="log-header">
+        <h3>📋 Incident & Detection Logs</h3>
+        <button id="clear-log-btn" class="btn-text">Clear</button>
+      </div>
+      <div id="log-list" class="log-list">
+        <div class="log-item default">
+          <span class="log-time">10:41:00</span>
+          <span class="log-msg">VisionGuard AI Mobile engine initialized. Camera stream active.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Audio element for acoustic warning alarm -->
+  <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock_short.ogg" preload="auto"></audio>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Ricardo RATOVOARISOA | Mobile VisionGuard AI</p>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
